@@ -2,6 +2,7 @@ package br.edu.ifsp.scl.ads.pdm.intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +15,9 @@ public class OutraActivity extends AppCompatActivity {
     // instancia da classe de View Binding
     private ActivityOutraBinding activityOutraBinding;
 
+    // constante para retorno MainActivity
+    public static final String RETORNO = "RETORNO";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,9 +25,15 @@ public class OutraActivity extends AppCompatActivity {
         setContentView(activityOutraBinding.getRoot());
 
         // recebendo parametros pela 1a forma
-        Bundle parametrosBundle = getIntent().getExtras();
-        if (parametrosBundle != null) {
-            String parametro = parametrosBundle.getString(MainActivity.PARAMETRO, ""); // const static public do MainActivity
+        //Bundle parametrosBundle = getIntent().getExtras(); // putExtras, getExtras
+        //if (parametrosBundle != null) {
+        //String parametro = parametrosBundle.getString(MainActivity.PARAMETRO, ""); // const static public do MainActivity
+        //     activityOutraBinding.recebidoTv.setText(parametro);
+        //}
+
+        // recebendo parametros pela 2a forma
+        String parametro = getIntent().getStringExtra(MainActivity.PARAMETRO);
+        if (parametro != null) {
             activityOutraBinding.recebidoTv.setText(parametro);
         }
 
@@ -61,6 +71,10 @@ public class OutraActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) { // criar id pro botão if()
+        // retonando para MainActivity
+        Intent retornoIntent = new Intent();
+        retornoIntent.putExtra(RETORNO, activityOutraBinding.retornoEt.getText().toString());
+        setResult(RESULT_OK, retornoIntent);
         finish(); // chama na sequencia onPause, onStop, onDestroy
     }
 }
