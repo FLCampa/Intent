@@ -124,16 +124,28 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(discarIntent);
                 return true;
             case R.id.pickMi:
-                Intent pegarImagemIntent = new Intent(Intent.ACTION_PICK);
-                // onde o arquivo esta e o tipo de arquivo
-                // caminho para o diretorio de imagens
-                String diretorioImagens = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath();
-                pegarImagemIntent.setDataAndType(Uri.parse(diretorioImagens), "image/*");
-                startActivityForResult(pegarImagemIntent, PICK_IMAGE_FILE_REQUEST_CODE);
+                startActivityForResult(getPickImageIntent(), PICK_IMAGE_FILE_REQUEST_CODE);
+                return true;
+            case R.id.chooserMi:
+                // forcar o usuario a escolher entre uma lista de apps msm q ja tenha um app padrão
+                Intent escolherActivityIntent = new Intent(Intent.ACTION_CHOOSER); // ACTION_CHOOSER precisa de outra intent (extra)
+                escolherActivityIntent.putExtra(Intent.EXTRA_INTENT, getPickImageIntent());
+                escolherActivityIntent.putExtra(Intent.EXTRA_TITLE, "Escolha um app para selecionar a imagem"); // seleciona uma tela especifica de um app
+                startActivityForResult(escolherActivityIntent, PICK_IMAGE_FILE_REQUEST_CODE);
                 return true;
         }
         
         return super.onOptionsItemSelected(item);
+    }
+
+    private Intent getPickImageIntent() {
+        Intent pegarImagemIntent = new Intent(Intent.ACTION_PICK);
+        // onde o arquivo esta e o tipo de arquivo
+        // caminho para o diretorio de imagens
+        String diretorioImagens = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath();
+        pegarImagemIntent.setDataAndType(Uri.parse(diretorioImagens), "image/*");
+
+        return pegarImagemIntent;
     }
 
     private void verifyCallPhonePermission() {

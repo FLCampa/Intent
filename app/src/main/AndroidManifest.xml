@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.edu.ifsp.scl.ads.pdm.intent">
 
-    <!-- permissoes de veroes abaixo de M(23) eran feitas direto no Manifest -->
+    <!-- permissoes de versoes abaixo de M(23) eram feitas direto no Manifest -->
     <!-- maior q 23 é feita no codigo-->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
